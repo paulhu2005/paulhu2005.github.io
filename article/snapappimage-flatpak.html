@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Snap、AppImage 与 Flatpak：有什么区别，哪个最适合您？ - Ccreat Tech Base</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Ccreat Tech Base</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Snap、AppImage 与 Flatpak：有什么区别，哪个最适合您？</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1701934977001"
+                  >2023-12-07 10:42</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1701934977001"
+                  >2023-12-07 10:42</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><hr />
+<p>Snap、AppImage 和 Flatpak 是 Linux 上三种最著名的与发行版无关的打包格式。那么你应该选择哪一个呢？</p>
+<img width="919" height="459" src=":/349a3568c9984a7b937876bea73e9de0" class="jop-noMdConv" />
+<p>Linux 系统流行的原因有很多，但安装应用程序并不是其中之一。 Linux 中的应用程序以包的形式提供，并且有各种风格。打包系统在安装、可用性和更新机制方面有所不同。</p>
+<p>下面，我们将研究并比较三种著名的包格式：Snap、AppImage 和 Flatpak，它们均独立于发行版。</p>
+<h2 id="什么是包格式">什么是包格式？</h2>
+<p>包格式是包含程序代码和运行它们所需的元数据的档案。 Linux 支持多种打包格式，开发人员可以选择以任何他们想要的格式打包他们的应用程序。作为用户，您需要下载所需的包并通过包管理器安装它才能运行应用程序。</p>
+<p>Ubuntu 和其他基于 Debian 的发行版本身使用 <strong>.deb</strong> 软件包格式，而 Fedora、RHEL 和 CentOS 使用 <strong>.rpm</strong>。本机包速度很快，因为它们是专门为系统设计和编译的，并且它们还共享库，从而使应用程序更小。然而，本机包需要用户自己更新和维护依赖项。</p>
+<p>Snap、AppImage 和 Flatpak 等发行版独立包提供了可以在不同计算机上运行的应用程序。它们消除了许多 Linux 用户每天面临的依赖问题，并使开发人员的生活变得更加轻松。然而，这也会导致更大的二进制文件。</p>
+<h2 id="snap-appimage-与-flatpak">Snap、AppImage 与 Flatpak</h2>
+<p>如上所述，Snap、AppImage 和 Flatpak 这三个工具都提供了独立于 Linux 发行版打包应用程序的方法。让我们仔细看看它们的一些显着功能以及优缺点。</p>
+<h3 id="1-捕捉">1. 捕捉</h3>
+<p>Snap 是 Canonical 开发的打包系统，并拥有重要的企业支持。当您安装应用程序的 snap 版本时，它包含运行该应用程序所需的所有库和依赖项。这节省了应用程序维护人员为不同系统推出不同版本所需的时间。</p>
+<p>您可以直接从 Snap Store 或通过命令行安装 Snap。许多流行的 Linux 发行版都采用了 Snap，包括 Ubuntu、Manjaro、Linux Mint、Debian、Kali 和 RHEL。 Snap 应用程序的另一个主要优点是它们无需修改也可以在物联网和云系统上运行。</p>
+<img width="919" height="472" src=":/8bdd08c2b02349fcaf4973d507e4ff55" class="jop-noMdConv" />
+<p>Snap 还允许用户拥有同一应用程序的多个版本。快照的自我更新特性确保用户不必担心手动更新。但是，由于 snap 包包含所有必要的依赖项，因此它们比普通的 <strong>.deb</strong> 或 <strong>.rpm</strong> 包体积更大。另外，许多应用程序的 snap 版本运行速度比 AppImages 或 Flatpaks 慢。</p>
+<p>下面是一些快照命令，如果您刚刚开始使用它们，它们可能会很有用。每个命令的功能都作为注释列出。</p>
+<div><pre class="hljs"><code><span class="hljs-comment"># install VLC Media Player</span>
+snap <span class="hljs-keyword">install</span> vlc
+ 
+<span class="hljs-comment"># list installed snaps</span>
+snap <span class="hljs-keyword">list</span>
+ 
+<span class="hljs-comment"># update VLC Media Player</span>
+snap refresh vlc
+ 
+<span class="hljs-comment"># revert VLC Media Player to the prior version </span>
+snap revert vlc
+ 
+<span class="hljs-comment"># remove VLC Media Player </span>
+snap <span class="hljs-keyword">remove</span> vlc</code></pre></div>
+<img width="919" height="458" src=":/9b1c3222d6cb4659a8342bc411fd30d1" class="jop-noMdConv" />
+<h3 id="2应用程序图像">2.应用程序图像</h3>
+<p>AppImage 是一种无需在计算机上安装即可尝试新应用程序的好方法。 AppImage 背后的概念相当简单：每个应用程序一个文件。这样，开发人员可以确保其应用程序的可移植性，并且用户无需安装即可尝试新软件包。 AppImages 的一个主要优点是它们在 Linux 中不需要 sudo 权限。</p>
+<p>要试用 AppImage，您所需要做的就是下载该包，使其可执行，然后运行它。它类似于 <strong>.exe</strong> 文件在 Windows 中的工作方式。</p>
+<p>AppImageHub 是 AppImage 包的中央存储库，包含许多流行的应用程序。您还可以从供应商网站（如果提供）下载 AppImage。但请远离从不受信任的来源下载的 AppImage。</p>
+<img width="919" height="498" src=":/782f04229ced4b4ca558a97c43852c35" class="jop-noMdConv" />
+<p>AppImage 通常比 snap 或 flatpak 更快，并且需要更少的存储空间。它们也很容易删除，因为您可以随时删除 AppImage 文件，而无需中断其他系统进程。</p>
+<p>以下是在 Linux 中从命令行运行 AppImage 文件所需的命令：</p>
+<div><pre class="hljs"><code><span class="hljs-comment"># grant execute permission to the file</span>
+chmod a+x *<span class="hljs-string">.AppImage</span> 
+   
+<span class="hljs-comment"># execute the AppImage</span>
+<span class="hljs-string">./</span>*<span class="hljs-string">.AppImage</span> </code></pre></div>
+<h3 id="3-扁平包装">3. 扁平包装</h3>
+<p>Flatpak 是另一个与发行版无关的打包系统，它为应用程序提供所需的依赖项。用户可以从流行的 Linux 系统的发行版商店或通过 CLI 找到并安装 flatpaks。</p>
+<p>Flatpak 是一个去中心化系统，这意味着您可以从多个存储库或远程站点（以 Flatpak 术语来说）获取软件包。 Flathub 是最受欢迎的遥控器，拥有数千个应用程序。</p>
+<img width="919" height="560" src=":/8082451c76aa495aaeb6e6503c5887da" class="jop-noMdConv" />
+<p>Flatpak 应用程序默认在沙箱中运行，这是一个独立于主机系统运行时的应用程序环境。该沙箱包含运行该软件所需的一切。 Flatpak 包的隔离特性使其本质上是安全的，并且只有在用户提供明确许可的情况下才能发生系统更改。</p>
+<p>然而，Flatpak 包通常比 Snap 或 AppImage 占用更多空间。与 AppImage 相比，它们也较慢，但比 Snap 包更快。 Flatpak 默认安装在现代 Linux 发行版上。如果不是这种情况，您可以使用以下命令安装它：</p>
+<p>在 Ubuntu/Debian 上：</p>
+<div><pre class="hljs"><code>sudo apt <span class="hljs-keyword">install</span> flatpak</code></pre></div>
+<p>在 Arch Linux 上：</p>
+<div><pre class="hljs"><code><span class="hljs-attribute">sudo pacman -S flatpak</span> </code></pre></div>
+<p>在 Fedora、RHEL 和 CentOS 上：</p>
+<div><pre class="hljs"><code>sudo dnf <span class="hljs-keyword">install</span> flatpak</code></pre></div>
+<p>您可以使用以下代码片段将 Flathub 存储库添加到您的系统中：</p>
+<div><pre class="hljs"><code>flatpak remote-add --<span class="hljs-keyword">if</span>-not-exists flathub \ https:<span class="hljs-regexp">//</span>flathub.org<span class="hljs-regexp">/repo/</span>flathub.flatpakrepo</code></pre></div>
+<p>使用 <strong>flatpak install</strong> 命令安装软件包。以下命令从 Flathub 安装 VLC flatpak：</p>
+<div><pre class="hljs"><code>flatpak <span class="hljs-keyword">install</span> flathub org.videolan.VLC</code></pre></div>
+<h2 id="snap-appimage-与-flatpak该走哪条路">Snap、AppImage 与 Flatpak：该走哪条路？</h2>
+<p>由于所有三种包格式均独立于操作系统，因此您可以选择使用其中任何一种。然而，在某些情况下，每个人的表现都优于其他人。例如，如果应用程序速度和程序大小对您来说最重要，那么 AppImage 将是理想的解决方案。</p>
+<p>但如果您想跨不同平台运行应用程序，Snaps 应该是您的最佳选择。另一方面，Flatpaks 为开发人员提供了更多控制权。因此，如果您是开发人员，您可能会选择 Flatpak 而不是 Snaps。在 Snap、AppImage 和 Flatpak 之间进行选择时，应用程序的可用性也是一个重要因素。</p>
+<h2 id="适用于-linux-的最佳独立发行版打包系统">适用于 Linux 的最佳独立发行版打包系统</h2>
+<p>独立于发行版的软件包是确保软件可移植性的好方法。 Snap、AppImage 和 Flatpak 这三个工具都可以为最终用户提供独特的东西。即便如此，您想使用哪一个仍取决于您。更好的是，尝试所有三个领域中的一些最佳 Linux 应用程序，看看哪些适合自己。</p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

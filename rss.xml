@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title></title>
+        <link>undefined</link>
+        <description>undefined</description>
+        <lastBuildDate>Sat, 09 Dec 2023 21:36:32 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[Fix libpng12-0 Missing In Ubuntu 22.10, 22.04, 21.10 Or 20.04]]></title>
+            <guid>12b899a41ef44a87b98c061e410439d9</guid>
+            <pubDate>Fri, 08 Dec 2023 12:53:53 GMT</pubDate>
+            <content:encoded><![CDATA[<p><em>In this article you'll find a very easy to apply fix that allows installing and running applications that depend on <code>libpng12-0</code> in <a title="https://www.linuxuprising.com/2018/04/ubuntu-1804-screenshot-tour-see-whats.html" href="https://www.linuxuprising.com/2018/04/ubuntu-1804-screenshot-tour-see-whats.html">Ubuntu 18.04 LTS</a> (or Linux Mint 19.</em>, which is based on Ubuntu 18.04), Ubuntu 22.10, 22.04, 21.10 Or 20.04 / Linux Mint 21.* and 20.<em>. This applies to any Ubuntu or Linux Mint flavor: Kubuntu, Xubuntu, Ubuntu MATE, Ubuntu Budgie, Linux Mint Xfce, Linux Mint Cinnamon, etc., as well as Pop!_OS or elementary OS.</em></p>
+<h2 id="the-problem">The problem</h2>
+<p><strong><code>libpng12</code> is no longer available in the Ubuntu repository archives and as a result, some applications that were not built with the newer libpng (<code>libpng16</code>) library fail to install.</strong> This issue is not new, since Ubuntu dropped <code>libpng12</code> with version 16.10, but those whom are <a title="https://www.linuxuprising.com/2018/04/how-to-upgrade-to-ubuntu-1804-lts.html" href="https://www.linuxuprising.com/2018/04/how-to-upgrade-to-ubuntu-1804-lts.html">upgrading from Ubuntu 16.04 to 18.04 LTS</a> , as well as Linux Mint 19.* users, might not be aware of this and how to fix it.</p>
+<p>Here is an example. Ubuntu Software simply fails to install WPS Office, without displaying any error message, so I opened the WPS Office deb with <code>gdebi-gtk</code>, which doesn't allow the deb to install, displaying this message: "<em><strong>Error: Dependency is not satisfiable: libpng12-0</strong></em>":</p>
+<p><a title="https://1.bp.blogspot.com/-mWY6xdpIe0g/WvQdc4nzwJI/AAAAAAAAAd4/_k1ETzCDd_E8pTFczcdWAZq6_nyFkDojgCLcBGAs/s1600/libpng12-0_error_ubuntu1804.png" href="https://1.bp.blogspot.com/-mWY6xdpIe0g/WvQdc4nzwJI/AAAAAAAAAd4/_k1ETzCDd_E8pTFczcdWAZq6_nyFkDojgCLcBGAs/s1600/libpng12-0_error_ubuntu1804.png"><img src=":/cab32baff5c54f8fb2562204c1246e59" alt="libpng12-0 error Ubuntu" title="libpng12-0 error Ubuntu" /></a></p>
+<p><a id="more" class="jop-noMdConv"></a></p>
+<p>Trying to install the same deb from a terminal results in the following libpng12-0 error:</p>
+<div><pre class="hljs"><code>logix@logix-laptop:~$ sudo dpkg -i wps-office_10.<span class="hljs-number">1.0</span>.<span class="hljs-number">5707_</span>a21_amd64.deb 
+[sudo] password <span class="hljs-keyword">for</span> logix: 
+Selecting previously unselected <span class="hljs-keyword">package</span> wps-office.
+(Reading database ... <span class="hljs-number">354579</span> files <span class="hljs-keyword">and</span> directories currently installed.)
+Preparing <span class="hljs-keyword">to</span> unpack wps-office_10.<span class="hljs-number">1.0</span>.<span class="hljs-number">5707_</span>a21_amd64.deb ...
+Unpacking wps-office (<span class="hljs-number">10.1</span>.<span class="hljs-number">0.5707</span>~a21) ...
+dpkg: dependency problems prevent <span class="hljs-keyword">configuration</span> <span class="hljs-keyword">of</span> wps-office:
+ wps-office depends <span class="hljs-keyword">on</span> libpng12-<span class="hljs-number">0</span>; however:
+  <span class="hljs-keyword">Package</span> libpng12-<span class="hljs-number">0</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> installed.
+
+dpkg: <span class="hljs-literal">error</span> processing <span class="hljs-keyword">package</span> wps-office (<span class="hljs-comment">--install):</span>
+ dependency problems - leaving unconfigured
+Processing triggers <span class="hljs-keyword">for</span> gnome-menus (<span class="hljs-number">3.13</span>.<span class="hljs-number">3</span>-<span class="hljs-number">11</span>ubuntu1) ...
+Processing triggers <span class="hljs-keyword">for</span> desktop-<span class="hljs-keyword">file</span>-utils (<span class="hljs-number">0.23</span>-<span class="hljs-number">1</span>ubuntu3) ...
+Processing triggers <span class="hljs-keyword">for</span> mime-support (<span class="hljs-number">3.60</span>ubuntu1) ...
+Processing triggers <span class="hljs-keyword">for</span> <span class="hljs-keyword">shared</span>-mime-info (<span class="hljs-number">1.9</span>-<span class="hljs-number">2</span>) ...
+Processing triggers <span class="hljs-keyword">for</span> hicolor-icon-theme (<span class="hljs-number">0.17</span>-<span class="hljs-number">2</span>) ...
+Errors were encountered <span class="hljs-keyword">while</span> processing:
+ wps-office</code></pre></div>
+<p>Note that some apps can't be installed due to missing <code>libpng12-0</code>, while others simply fail to start.</p>
+<h2 id="the-fix-install-and-run-applications-that-require-libpng12-0-in-ubuntu-2210-2204-2110-or-2204-linux-mint-21-20-or-19">The fix: install and run applications that require libpng12-0 in Ubuntu 22.10, 22.04, 21.10 or 22.04 / Linux Mint 21.<em>, 20.</em> or 19.*</h2>
+<p><em><em>To fix the issue on the now very old Ubuntu 18.04 / Linux Mint 19.</em> / Pop!_OS 18.04 / elementary OS 5 or 5.1, download the <code>libpng12-0</code> package for your architecture (you only need one of these, specific for your Ubuntu / Linux Mint architecture):</em>*</p>
+<ul>
+<li><a title="https://launchpad.net/~ubuntu-security/+archive/ubuntu/ppa/+build/15108504" href="https://launchpad.net/~ubuntu-security/+archive/ubuntu/ppa/+build/15108504">64bit deb</a></li>
+<li><a title="https://launchpad.net/~ubuntu-security/+archive/ubuntu/ppa/+build/15108507" href="https://launchpad.net/~ubuntu-security/+archive/ubuntu/ppa/+build/15108507">32bit deb</a></li>
+</ul>
+<p><img src=":/d2366a0eafc44b549e86fe844e73f62e" alt="Ezoic" title="ezoic" /><br />
+On that page, scroll down to the <code>Built files</code> section and only download the <code>libpng12-0</code> DEB package (e.g. on 64bit: <code>libpng12-0_1.2.54-1ubuntu1.1_amd64.deb</code>)!</p>
+<p>Install the <code>libpng12-0</code> deb downloaded by using the link above, and you should be able to install and run applications that still depend on this library, in Ubuntu 18.04 LTS or Ubuntu 18.10 / Linux Mint 19.</p>
+<p><em><em>To fix the issue on Ubuntu 22.10, 22.04, 21.10 or 20.04 / Linux Mint 21.</em> or 20.*, you can install libpng by using a PPA I created with an updated libpng12-0 package. Use these commands to add the PPA and install libpng12-0:</em>*</p>
+<div><pre class="hljs"><code>sudo<span class="hljs-built_in"> add-apt-repository </span>ppa:linuxuprising/libpng12
+sudo apt update
+sudo apt install libpng12-0</code></pre></div>
+<p><strong>Or download the libpng12-0 DEB package <a title="http://ppa.launchpad.net/linuxuprising/libpng12/ubuntu/pool/main/libp/libpng/" href="http://ppa.launchpad.net/linuxuprising/libpng12/ubuntu/pool/main/libp/libpng/">from the PPA</a></strong> and install it manually (you only need the libpng12-0 DEB package, e.g. <code>libpng12-0_1.2.54-1ubuntu1.1+1~ppa0~eoan_amd64.deb</code>).</p>
+<p>The reason this package required an update for Ubuntu 22.10, 22.04, 21.10 and 20.04, is that with Ubuntu 19.04, the <code>/lib</code> directory is a symlink to <code>/usr/lib</code> (this was not the case with Ubuntu 18.04 and older), and this causes the <code>libpng12-0</code> installation to fail, since this package tries to create a link from <code>/lib/x86_64-linux-gnu/libpng12.so.0</code> to <code>/usr/lib</code>, which is already a symlink. So the DEB had to be repacked to get it to work on newer Ubuntu versions.</p>
+<p>As a result, when trying to install the old <code>libpng12-0</code> package on Ubuntu (or Pop!_OS, etc.) 22.10, 22.04, 21.10 Or 20.04, you'd get this error:</p>
+<div><pre class="hljs"><code><span class="hljs-attribute">dpkg</span>: error processing archive libpng12-<span class="hljs-number">0</span>_1.<span class="hljs-number">2</span>.<span class="hljs-number">54</span>-<span class="hljs-number">1</span>ubuntu1.<span class="hljs-number">1</span>_amd64.deb (--unpack):
+ <span class="hljs-attribute">unable</span> to install new version of '/lib/x86_64-linux-gnu/libpng12.so.<span class="hljs-number">0</span>': No such file or directory
+<span class="hljs-attribute">No</span> apport report written because the error message indicates an issue <span class="hljs-literal">on</span> the local system
+<span class="hljs-attribute">Errors</span> were encountered while processing:
+ <span class="hljs-attribute">libpng12</span>-<span class="hljs-number">0</span>_1.<span class="hljs-number">2</span>.<span class="hljs-number">54</span>-<span class="hljs-number">1</span>ubuntu1.<span class="hljs-number">1</span>_amd64.deb</code></pre></div>
+<p><img src=":/d2366a0eafc44b549e86fe844e73f62e" alt="Ezoic" title="ezoic" /></p>
+<p>This error will no longer happen with the version from the PPA.</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Snap、AppImage 与 Flatpak：有什么区别，哪个最适合您？]]></title>
+            <guid>c62c5bc870114d89848788637820793a</guid>
+            <pubDate>Thu, 07 Dec 2023 07:42:57 GMT</pubDate>
+            <content:encoded><![CDATA[<hr />
+<p>Snap、AppImage 和 Flatpak 是 Linux 上三种最著名的与发行版无关的打包格式。那么你应该选择哪一个呢？</p>
+<img width="919" height="459" src=":/349a3568c9984a7b937876bea73e9de0" class="jop-noMdConv" />
+<p>Linux 系统流行的原因有很多，但安装应用程序并不是其中之一。 Linux 中的应用程序以包的形式提供，并且有各种风格。打包系统在安装、可用性和更新机制方面有所不同。</p>
+<p>下面，我们将研究并比较三种著名的包格式：Snap、AppImage 和 Flatpak，它们均独立于发行版。</p>
+<h2 id="什么是包格式">什么是包格式？</h2>
+<p>包格式是包含程序代码和运行它们所需的元数据的档案。 Linux 支持多种打包格式，开发人员可以选择以任何他们想要的格式打包他们的应用程序。作为用户，您需要下载所需的包并通过包管理器安装它才能运行应用程序。</p>
+<p>Ubuntu 和其他基于 Debian 的发行版本身使用 <strong>.deb</strong> 软件包格式，而 Fedora、RHEL 和 CentOS 使用 <strong>.rpm</strong>。本机包速度很快，因为它们是专门为系统设计和编译的，并且它们还共享库，从而使应用程序更小。然而，本机包需要用户自己更新和维护依赖项。</p>
+<p>Snap、AppImage 和 Flatpak 等发行版独立包提供了可以在不同计算机上运行的应用程序。它们消除了许多 Linux 用户每天面临的依赖问题，并使开发人员的生活变得更加轻松。然而，这也会导致更大的二进制文件。</p>
+<h2 id="snap-appimage-与-flatpak">Snap、AppImage 与 Flatpak</h2>
+<p>如上所述，Snap、AppImage 和 Flatpak 这三个工具都提供了独立于 Linux 发行版打包应用程序的方法。让我们仔细看看它们的一些显着功能以及优缺点。</p>
+<h3 id="1-捕捉">1. 捕捉</h3>
+<p>Snap 是 Canonical 开发的打包系统，并拥有重要的企业支持。当您安装应用程序的 snap 版本时，它包含运行该应用程序所需的所有库和依赖项。这节省了应用程序维护人员为不同系统推出不同版本所需的时间。</p>
+<p>您可以直接从 Snap Store 或通过命令行安装 Snap。许多流行的 Linux 发行版都采用了 Snap，包括 Ubuntu、Manjaro、Linux Mint、Debian、Kali 和 RHEL。 Snap 应用程序的另一个主要优点是它们无需修改也可以在物联网和云系统上运行。</p>
+<img width="919" height="472" src=":/8bdd08c2b02349fcaf4973d507e4ff55" class="jop-noMdConv" />
+<p>Snap 还允许用户拥有同一应用程序的多个版本。快照的自我更新特性确保用户不必担心手动更新。但是，由于 snap 包包含所有必要的依赖项，因此它们比普通的 <strong>.deb</strong> 或 <strong>.rpm</strong> 包体积更大。另外，许多应用程序的 snap 版本运行速度比 AppImages 或 Flatpaks 慢。</p>
+<p>下面是一些快照命令，如果您刚刚开始使用它们，它们可能会很有用。每个命令的功能都作为注释列出。</p>
+<div><pre class="hljs"><code><span class="hljs-comment"># install VLC Media Player</span>
+snap <span class="hljs-keyword">install</span> vlc
+ 
+<span class="hljs-comment"># list installed snaps</span>
+snap <span class="hljs-keyword">list</span>
+ 
+<span class="hljs-comment"># update VLC Media Player</span>
+snap refresh vlc
+ 
+<span class="hljs-comment"># revert VLC Media Player to the prior version </span>
+snap revert vlc
+ 
+<span class="hljs-comment"># remove VLC Media Player </span>
+snap <span class="hljs-keyword">remove</span> vlc</code></pre></div>
+<img width="919" height="458" src=":/9b1c3222d6cb4659a8342bc411fd30d1" class="jop-noMdConv" />
+<h3 id="2应用程序图像">2.应用程序图像</h3>
+<p>AppImage 是一种无需在计算机上安装即可尝试新应用程序的好方法。 AppImage 背后的概念相当简单：每个应用程序一个文件。这样，开发人员可以确保其应用程序的可移植性，并且用户无需安装即可尝试新软件包。 AppImages 的一个主要优点是它们在 Linux 中不需要 sudo 权限。</p>
+<p>要试用 AppImage，您所需要做的就是下载该包，使其可执行，然后运行它。它类似于 <strong>.exe</strong> 文件在 Windows 中的工作方式。</p>
+<p>AppImageHub 是 AppImage 包的中央存储库，包含许多流行的应用程序。您还可以从供应商网站（如果提供）下载 AppImage。但请远离从不受信任的来源下载的 AppImage。</p>
+<img width="919" height="498" src=":/782f04229ced4b4ca558a97c43852c35" class="jop-noMdConv" />
+<p>AppImage 通常比 snap 或 flatpak 更快，并且需要更少的存储空间。它们也很容易删除，因为您可以随时删除 AppImage 文件，而无需中断其他系统进程。</p>
+<p>以下是在 Linux 中从命令行运行 AppImage 文件所需的命令：</p>
+<div><pre class="hljs"><code><span class="hljs-comment"># grant execute permission to the file</span>
+chmod a+x *<span class="hljs-string">.AppImage</span> 
+   
+<span class="hljs-comment"># execute the AppImage</span>
+<span class="hljs-string">./</span>*<span class="hljs-string">.AppImage</span> </code></pre></div>
+<h3 id="3-扁平包装">3. 扁平包装</h3>
+<p>Flatpak 是另一个与发行版无关的打包系统，它为应用程序提供所需的依赖项。用户可以从流行的 Linux 系统的发行版商店或通过 CLI 找到并安装 flatpaks。</p>
+<p>Flatpak 是一个去中心化系统，这意味着您可以从多个存储库或远程站点（以 Flatpak 术语来说）获取软件包。 Flathub 是最受欢迎的遥控器，拥有数千个应用程序。</p>
+<img width="919" height="560" src=":/8082451c76aa495aaeb6e6503c5887da" class="jop-noMdConv" />
+<p>Flatpak 应用程序默认在沙箱中运行，这是一个独立于主机系统运行时的应用程序环境。该沙箱包含运行该软件所需的一切。 Flatpak 包的隔离特性使其本质上是安全的，并且只有在用户提供明确许可的情况下才能发生系统更改。</p>
+<p>然而，Flatpak 包通常比 Snap 或 AppImage 占用更多空间。与 AppImage 相比，它们也较慢，但比 Snap 包更快。 Flatpak 默认安装在现代 Linux 发行版上。如果不是这种情况，您可以使用以下命令安装它：</p>
+<p>在 Ubuntu/Debian 上：</p>
+<div><pre class="hljs"><code>sudo apt <span class="hljs-keyword">install</span> flatpak</code></pre></div>
+<p>在 Arch Linux 上：</p>
+<div><pre class="hljs"><code><span class="hljs-attribute">sudo pacman -S flatpak</span> </code></pre></div>
+<p>在 Fedora、RHEL 和 CentOS 上：</p>
+<div><pre class="hljs"><code>sudo dnf <span class="hljs-keyword">install</span> flatpak</code></pre></div>
+<p>您可以使用以下代码片段将 Flathub 存储库添加到您的系统中：</p>
+<div><pre class="hljs"><code>flatpak remote-add --<span class="hljs-keyword">if</span>-not-exists flathub \ https:<span class="hljs-regexp">//</span>flathub.org<span class="hljs-regexp">/repo/</span>flathub.flatpakrepo</code></pre></div>
+<p>使用 <strong>flatpak install</strong> 命令安装软件包。以下命令从 Flathub 安装 VLC flatpak：</p>
+<div><pre class="hljs"><code>flatpak <span class="hljs-keyword">install</span> flathub org.videolan.VLC</code></pre></div>
+<h2 id="snap-appimage-与-flatpak该走哪条路">Snap、AppImage 与 Flatpak：该走哪条路？</h2>
+<p>由于所有三种包格式均独立于操作系统，因此您可以选择使用其中任何一种。然而，在某些情况下，每个人的表现都优于其他人。例如，如果应用程序速度和程序大小对您来说最重要，那么 AppImage 将是理想的解决方案。</p>
+<p>但如果您想跨不同平台运行应用程序，Snaps 应该是您的最佳选择。另一方面，Flatpaks 为开发人员提供了更多控制权。因此，如果您是开发人员，您可能会选择 Flatpak 而不是 Snaps。在 Snap、AppImage 和 Flatpak 之间进行选择时，应用程序的可用性也是一个重要因素。</p>
+<h2 id="适用于-linux-的最佳独立发行版打包系统">适用于 Linux 的最佳独立发行版打包系统</h2>
+<p>独立于发行版的软件包是确保软件可移植性的好方法。 Snap、AppImage 和 Flatpak 这三个工具都可以为最终用户提供独特的东西。即便如此，您想使用哪一个仍取决于您。更好的是，尝试所有三个领域中的一些最佳 Linux 应用程序，看看哪些适合自己。</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Debian9(Stretch)换源 - 云梦博客]]></title>
+            <guid>55a6b34110314ece8a8a3387cfb8aa6b</guid>
+            <pubDate>Thu, 07 Dec 2023 06:04:28 GMT</pubDate>
+            <content:encoded><![CDATA[<p>从2023年4月23日起，debian9的源包地址更换至新地址。 新地址如下：</p>
+<div><pre class="hljs"><code>deb http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian/</span> stretch main contrib non-free
+deb-src http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian/</span> stretch main contrib non-free
+deb http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian-security/</span> stretch/updates main contrib non-free
+deb-src http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian-security/</span> stretch/updates main contrib non-free
+deb http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian/</span> stretch-backports main contrib non-free</code></pre></div>
+<p>将上面内容替换到<code>/etc/apt/sources.list</code>中，然后执行<code>sudo apt-get update</code>即可。</p>
+<p>最终终于完成了安装包更新，然后就可以随便安装需要的工具软件了。</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[seeking help: input method (im-config, fcitx, gcin, hime, ibus) setup – antiX-forum]]></title>
+            <guid>24329a5567a94f61bddf4c7a0a077212</guid>
+            <pubDate>Mon, 04 Dec 2023 06:51:42 GMT</pubDate>
+            <content:encoded><![CDATA[<p><a title="https://kwonnam.pe.kr/wiki/linux/mxlinux/install" href="https://kwonnam.pe.kr/wiki/linux/mxlinux/install">https://kwonnam.pe.kr/wiki/linux/mxlinux/install</a></p>
+<p>Hmm.. <strong>im-config</strong> (alone) does not work. I don’t know what went wrong with my previous installation. I start from a really fresh install of antix 17 (32bit) and it works now. For future reference here are the complete steps:</p>
+<ol>
+<li>
+<p>Make sure you have chosen the correct locale (language) when you installed antix.<br />
+If not sure, run <strong>sudo dpkg-reconfigure locales</strong></p>
+</li>
+<li>
+<p>Install the packages listed in <a title="http://lmdelive.wordpress.com/2017/11/29/antix-fcitx/" href="http://lmdelive.wordpress.com/2017/11/29/antix-fcitx/">this post</a> (thanks to emer!)</p>
+</li>
+<li>
+<p>[This step is <em>not necessary</em> but you can try it in case you fail otherwise.] As the primary ordinary user (not root!), <strong>im-config -n fcitx</strong> to choose fcitx as your input method.</p>
+</li>
+<li>
+<p>Add the following to ~/.bashrc:</p>
+<div><pre class="hljs"><code> <span class="hljs-built_in">export</span> <span class="hljs-attribute">GTK_IM_MODULE</span>=fcitx
+<span class="hljs-built_in">export</span> <span class="hljs-attribute">XMODIFIERS</span>=@im=fcitx
+<span class="hljs-built_in">export</span> <span class="hljs-attribute">QT_IM_MODULE</span>=fcitx </code></pre></div>
+</li>
+<li>
+<p>Add <strong>fcitx -d</strong> to ~/.desktop-session/startup</p>
+</li>
+<li>
+<p>Log out and log in again. You should see an extra keyboard icon at the lower right corner of the desktop, and should be able to use ctrl-space to switch to Chinese input mode. Enjoy!</p>
+</li>
+</ol>
+<p>==============</p>
+<p>Then I install gcin and repeat steps 3-6. According to <a title="http://bbs.archlinux.org/viewtopic.php?id=197223" href="http://bbs.archlinux.org/viewtopic.php?id=197223">this page</a>, the line added to ~/.desktop-session/startup should look like <strong>/usr/bin/dbus-launch /usr/bin/gcin</strong>. Other than that, the rest is only a matter of replacing fcitx with gcin. But gcin is still not working — one can seem to switch input mode to Chinese by clicking the input method icon at the lower right corner but the following keystrokes are still treated as plain English keyboard keys.</p>
+<p>For the hime input method, the startup command in ~/.desktop-session/startup is <strong>hime &amp;</strong> and the result is the same as gcin.</p>
+<p>For the ibus input method, the startup command in ~/.desktop-session/startup is <strong>ibus-daemon -d</strong> and the result is the same as gcin except that you can also use ctrl-space to switch input mode if you use ibus-setup to configure it.</p>
+<p>Well thank you everyone for your help. I still hope that the problems with other input methods can be solved. But for now I will just enjoy fcitx and move on to create a nice remixed antix iso image. And please let me know if there are L10N (zh_TW) works for antix that I can help.</p>
+<p>ps. I cannot change the title to add “Solved”, can I?</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Debian 9下在线 / 离线安装chrome浏览器]]></title>
+            <guid>c395785f03fa4c07845dbde66ad42f37</guid>
+            <pubDate>Mon, 04 Dec 2023 06:33:12 GMT</pubDate>
+            <content:encoded><![CDATA[<p><strong>一、在线安装</strong><br />
+1.  添加chrome下载源</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>sudo sh<br class="jop-noMdConv" />-c<br class="jop-noMdConv" />'echo "deb <a title="http://dl.google.com/linux/chrome/deb/" href="http://dl.google.com/linux/chrome/deb/">http://dl.google.com/linux/chrome/deb/</a> stable main" &gt;&gt; /etc/apt/sources.list.d/google-chrome.list'</td>
+</tr>
+</tbody>
+</table>
+<p>2.  导入公钥</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>wget<br class="jop-noMdConv" />-q<br class="jop-noMdConv" />-O<br class="jop-noMdConv" />-<br class="jop-noMdConv" /><a title="https://dl.google.com/linux/linux%5C_signing%5C_key.pub" href="https://dl.google.com/linux/linux%5C_signing%5C_key.pub">https://dl.google.com/linux/linux\_signing\_key.pub</a><br class="jop-noMdConv" />|<br class="jop-noMdConv" />sudo apt-key add<br class="jop-noMdConv" />-</td>
+</tr>
+</tbody>
+</table>
+<p>3.  更新源</p>
+<p>4.   安装稳定版chrome</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>sudo apt-get<br class="jop-noMdConv" />install google-chrome-stable</td>
+</tr>
+</tbody>
+</table>
+<p>安装Beta版Chrome，在终端输入：sudo apt-get install google-chrome-beta<br />
+安装不稳定版Chrome，在终端输入：sudo apt-get install google-chrome-unstable</p>
+<p><strong>二、离线安装</strong></p>
+<p>下载64位版本</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>wget <a title="https://dl.google.com/linux/direct/google-chrome-stable%5C_current%5C_amd64.deb" href="https://dl.google.com/linux/direct/google-chrome-stable%5C_current%5C_amd64.deb">https://dl.google.com/linux/direct/google-chrome-stable\_current\_amd64.deb</a></td>
+</tr>
+</tbody>
+</table>
+<p>下载32位版本：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>wget <a title="https://dl.google.com/linux/direct/google-chrome-stable%5C_current%5C_i386.deb" href="https://dl.google.com/linux/direct/google-chrome-stable%5C_current%5C_i386.deb">https://dl.google.com/linux/direct/google-chrome-stable\_current\_i386.deb</a></td>
+</tr>
+</tbody>
+</table>
+<p>以普通用户身份执行</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>dpkg<br class="jop-noMdConv" />-i<br class="jop-noMdConv" />google-chrome-stable_current_amd64.deb</td>
+</tr>
+</tbody>
+</table>
+<p>测试运行</p>
+<p>如果运行出现以下错误：<br />
+error while loading shared libraries: libnss3.so: cannot open shared object file: No such file or directory</p>
+<p>请尝试运行以下命令进行修复：</p>
+<p><a title="#" href="#"></a>apt</p>
+<p>--fix-broken install</p>
+<p><a title="#" href="#"></a>apt install libnss3-dev</p>
+]]></content:encoded>
+        </item>
+    </channel>
+</rss>

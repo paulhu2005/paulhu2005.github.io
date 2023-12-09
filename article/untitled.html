@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>seeking help: input method (im-config, fcitx, gcin, hime, ibus) setup – antiX-forum - Ccreat Tech Base</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Ccreat Tech Base</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">seeking help: input method (im-config, fcitx, gcin, hime, ibus) setup – antiX-forum</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1701672702627"
+                  >2023-12-04 09:51</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1701672930976"
+                  >2023-12-04 09:55</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p><a title="https://kwonnam.pe.kr/wiki/linux/mxlinux/install" href="https://kwonnam.pe.kr/wiki/linux/mxlinux/install">https://kwonnam.pe.kr/wiki/linux/mxlinux/install</a></p>
+<p>Hmm.. <strong>im-config</strong> (alone) does not work. I don’t know what went wrong with my previous installation. I start from a really fresh install of antix 17 (32bit) and it works now. For future reference here are the complete steps:</p>
+<ol>
+<li>
+<p>Make sure you have chosen the correct locale (language) when you installed antix.<br />
+If not sure, run <strong>sudo dpkg-reconfigure locales</strong></p>
+</li>
+<li>
+<p>Install the packages listed in <a title="http://lmdelive.wordpress.com/2017/11/29/antix-fcitx/" href="http://lmdelive.wordpress.com/2017/11/29/antix-fcitx/">this post</a> (thanks to emer!)</p>
+</li>
+<li>
+<p>[This step is <em>not necessary</em> but you can try it in case you fail otherwise.] As the primary ordinary user (not root!), <strong>im-config -n fcitx</strong> to choose fcitx as your input method.</p>
+</li>
+<li>
+<p>Add the following to ~/.bashrc:</p>
+<div><pre class="hljs"><code> <span class="hljs-built_in">export</span> <span class="hljs-attribute">GTK_IM_MODULE</span>=fcitx
+<span class="hljs-built_in">export</span> <span class="hljs-attribute">XMODIFIERS</span>=@im=fcitx
+<span class="hljs-built_in">export</span> <span class="hljs-attribute">QT_IM_MODULE</span>=fcitx </code></pre></div>
+</li>
+<li>
+<p>Add <strong>fcitx -d</strong> to ~/.desktop-session/startup</p>
+</li>
+<li>
+<p>Log out and log in again. You should see an extra keyboard icon at the lower right corner of the desktop, and should be able to use ctrl-space to switch to Chinese input mode. Enjoy!</p>
+</li>
+</ol>
+<p>==============</p>
+<p>Then I install gcin and repeat steps 3-6. According to <a title="http://bbs.archlinux.org/viewtopic.php?id=197223" href="http://bbs.archlinux.org/viewtopic.php?id=197223">this page</a>, the line added to ~/.desktop-session/startup should look like <strong>/usr/bin/dbus-launch /usr/bin/gcin</strong>. Other than that, the rest is only a matter of replacing fcitx with gcin. But gcin is still not working — one can seem to switch input mode to Chinese by clicking the input method icon at the lower right corner but the following keystrokes are still treated as plain English keyboard keys.</p>
+<p>For the hime input method, the startup command in ~/.desktop-session/startup is <strong>hime &amp;</strong> and the result is the same as gcin.</p>
+<p>For the ibus input method, the startup command in ~/.desktop-session/startup is <strong>ibus-daemon -d</strong> and the result is the same as gcin except that you can also use ctrl-space to switch input mode if you use ibus-setup to configure it.</p>
+<p>Well thank you everyone for your help. I still hope that the problems with other input methods can be solved. But for now I will just enjoy fcitx and move on to create a nice remixed antix iso image. And please let me know if there are L10N (zh_TW) works for antix that I can help.</p>
+<p>ps. I cannot change the title to add “Solved”, can I?</p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

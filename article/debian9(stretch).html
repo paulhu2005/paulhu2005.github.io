@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Debian9(Stretch)换源 - 云梦博客 - Ccreat Tech Base</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Ccreat Tech Base</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Debian9(Stretch)换源 - 云梦博客</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1701929068735"
+                  >2023-12-07 09:04</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1701929068735"
+                  >2023-12-07 09:04</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>从2023年4月23日起，debian9的源包地址更换至新地址。 新地址如下：</p>
+<div><pre class="hljs"><code>deb http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian/</span> stretch main contrib non-free
+deb-src http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian/</span> stretch main contrib non-free
+deb http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian-security/</span> stretch/updates main contrib non-free
+deb-src http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian-security/</span> stretch/updates main contrib non-free
+deb http:<span class="hljs-regexp">//</span>archive.debian.org<span class="hljs-regexp">/debian/</span> stretch-backports main contrib non-free</code></pre></div>
+<p>将上面内容替换到<code>/etc/apt/sources.list</code>中，然后执行<code>sudo apt-get update</code>即可。</p>
+<p>最终终于完成了安装包更新，然后就可以随便安装需要的工具软件了。</p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>
