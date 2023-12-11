@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>如何关闭“若要接收后续 google chrome 更新,您需使用 windows 10 或更高版本” - Ccreat&#39;s Tech Journal</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Ccreat&#39;s Tech Journal</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">如何关闭“若要接收后续 google chrome 更新,您需使用 windows 10 或更高版本”</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1701150594458"
+                  >2023-11-28 08:49</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1701150594458"
+                  >2023-11-28 08:49</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>最近的 Chrome 浏览器一开启就弹出更新 warning，<strong>“若要接收后续 google chrome 更新,您需使用 windows 10 或更高版本”</strong>，烦死了。<br />
+找了一下，找到对应的解决办法，<a title="https://link.zhihu.com/?target=https%3A//links.jianshu.com/go%3Fto%3Db64decode_aHR0cHM6Ly9zdXBwb3J0Lmdvb2dsZS5jb20vY2hyb21lL3RocmVhZC8xOTA4NTQ2OTgvZGlzYWJsZS10by1nZXQtZnV0dXJlLWdvb2dsZS1jaHJvbWUtdXBkYXRlcy15b3UtbGwtbmVlZC13aW5kb3dzLTEwLW9yLWxhdGVyP2hsPWVu" href="https://link.zhihu.com/?target=https%3A//links.jianshu.com/go%3Fto%3Db64decode_aHR0cHM6Ly9zdXBwb3J0Lmdvb2dsZS5jb20vY2hyb21lL3RocmVhZC8xOTA4NTQ2OTgvZGlzYWJsZS10by1nZXQtZnV0dXJlLWdvb2dsZS1jaHJvbWUtdXBkYXRlcy15b3UtbGwtbmVlZC13aW5kb3dzLTEwLW9yLWxhdGVyP2hsPWVu">Disable "To get future Google Chrome updates, you'll need Windows 10 or later"</a>。其中给出了解决方式：</p>
+<blockquote>
+<p>SOLUTION: Make this text file with a .reg extension then double click on it, to enter &gt; it into registry, restart Google Chrome:<br />
+Windows Registry Editor Version 5.00<br />
+[HKEY_CURRENT_USER\Software\Policies\Google\Chrome]<br />
+"SuppressUnsupportedOSWarning"=dword:00000001</p>
+</blockquote>
+<p>上面看明白了下面的文字便可不用再看。</p>
+<p>较为详细的说明：</p>
+<ol>
+<li>新建一个记事本文件；</li>
+<li>打开记事本文件，复制下面这段代码，粘贴其中，保存关闭。</li>
+</ol>
+<div><pre class="hljs"><code>Windows Registry Editor Version <span class="hljs-number">5.00</span>
+
+[HKEY_CURRENT_USER\Software\Policies\Google\Chrome]
+<span class="hljs-string">"SuppressUnsupportedOSWarning"</span>=<span class="hljs-name">dword</span>:<span class="hljs-number">00000001</span></code></pre></div>
+<p>将记事本的名称改为，closeChromeUpdateWarning.reg，注意连 .txt 的后缀也得删除一并改掉。（前面那个长长的名字是个人习惯，你可以随便命名成自己喜欢的名字。）双击运行该文件，一路点击<strong>确定</strong>就完事了。<br />
+重启Chrome浏览器，烦人的提示已消失，整个世界都清净了<code>^_^</code></p>
+<p>如果想要反悔，请尝试下面步骤：</p>
+<p>1. Win+R 调出“运行”</p>
+<p><img src=":/1dc62e8273ce4bc1b0465b40379f3fac" /></p>
+<p>2.在“运行”里输入regedit后点击确定</p>
+<p><img src=":/d2554eb9a8e04c508863c4930a67385d" /></p>
+<p>3.在弹出的“注册表编辑器”里按照路径找到添加的注册表HKEY_CURRENT_USER\Software\Policies\Google\Chrome</p>
+<p><img src=":/1ec2de1849bb425393100f0daaebef13" /></p>
+<p>4.选中Chrome直接删除</p>
+<p><img src=":/396f91d99cfc49649cfcc3357d4457f0" /></p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>
