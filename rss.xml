@@ -4,7 +4,7 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Mon, 11 Dec 2023 06:43:16 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 12 Dec 2023 14:47:24 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
@@ -76,6 +76,87 @@ chmod a+x *<span class="hljs-string">.AppImage</span>
 <p>但如果您想跨不同平台运行应用程序，Snaps 应该是您的最佳选择。另一方面，Flatpaks 为开发人员提供了更多控制权。因此，如果您是开发人员，您可能会选择 Flatpak 而不是 Snaps。在 Snap、AppImage 和 Flatpak 之间进行选择时，应用程序的可用性也是一个重要因素。</p>
 <h2 id="适用于-linux-的最佳独立发行版打包系统">适用于 Linux 的最佳独立发行版打包系统</h2>
 <p>独立于发行版的软件包是确保软件可移植性的好方法。 Snap、AppImage 和 Flatpak 这三个工具都可以为最终用户提供独特的东西。即便如此，您想使用哪一个仍取决于您。更好的是，尝试所有三个领域中的一些最佳 Linux 应用程序，看看哪些适合自己。</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[macmini 装Linux后 WIFI解决办法 - 自在拉基]]></title>
+            <guid>7a874f6853f74652ac79cef14ccd953c</guid>
+            <pubDate>Thu, 07 Dec 2023 06:08:05 GMT</pubDate>
+            <content:encoded><![CDATA[<blockquote>
+<p>适用Linux所有版本，就是命令不一样，我以Ubuntu为例，命令使用的也是Ubuntu的。</p>
+</blockquote>
+<p>bash</p>
+<p>sudo apt-get install bcmwl-kernel-source<br />
+sudo apt-get install broadcom-sta-common<br />
+sudo apt-get install broadcom-sta-source<br />
+sudo apt-get install b43-fwcutter<br />
+sudo apt-get install firmware-b43-installer</p>
+<p>我安装完以上包之后查看，就看到已经识别到网卡设备了。我看网上有人说需要运行</p>
+<p>bash</p>
+<p>sudo modprobe -r b43 ssb<br />
+sudo modprobe b43</p>
+<p>有待考证，自行测试。</p>
+<p>接下来我将使用<code>nmcli</code>连接WiFi网络。</p>
+<p>无线网卡通常被命名为<code>wlan0，wlp3s0</code>等。</p>
+<ul>
+<li>安装相关软件包</li>
+</ul>
+<p>bash</p>
+<p>apt install network-manager</p>
+<ul>
+<li>如果是普通的家用WiFi，运行以下命令即可连接</li>
+</ul>
+<p>bash</p>
+<p>nmcli dev wifi connect "WiFi的名字" password "WiFi的密码"</p>
+<ul>
+<li>隐藏SSID的则需要额外操作，如下：</li>
+</ul>
+<p>bash</p>
+<p>nmcli c add type wifi con-name "自定义连接名称" ifname "无线网卡名称" ssid "WiFi的名字"</p>
+<p>nmcli con modify "自定义连接名称" wifi-sec.key-mgmt wpa-psk</p>
+<p>nmcli con modify "自定义连接名称" wifi-sec.psk "WiFi的密码"</p>
+<p>nmcli con up "自定义连接名称"</p>
+<p>sudo nmcli conn modify "自定义连接名称" connection.autoconnect yes</p>
+<p>echo -e '[Install] \nWantedBy=multi-user.target' &gt;&gt; /usr/lib/systemd/system/rc-local.service<br />
+vim /etc/rc.local</p>
+<p>nmcli con up "自定义连接名称"<br />
+exit 0<br />
+chmod +x /etc/rc.local<br />
+sudo systemctl daemon-reload<br />
+sudo systemctl enable rc-local<br />
+sudo systemctl start rc-local</p>
+<p>sudo nmcli connection modify "自定义连接名称" ipv4.method manual ipv4.addresses &lt;ip地址&gt;/&lt;子网掩码&gt; ipv4.gateway 网关地址 ipv4.dns dns地址1,dns地址2</p>
+<p>Wi-Fi 的配置文件通常位于 NetworkManager 的配置目录中。在 Ubuntu 等基于 Debian 的系统中，Wi-Fi 的配置文件路径是 /etc/NetworkManager/system-connections/ 目录。</p>
+<p>每个 Wi-Fi 连接都会在该目录下创建一个单独的配置文件，文件名通常与连接名称相同。这些配置文件是以明文方式存储的，但只有 root 用户才有权限读取和修改这些文件。</p>
+<p>bash</p>
+<p>vim /etc/NetworkManager/system-connections/Weidian-video.nmconnection<br />
+[connection]<br />
+id=自定义连接名称<br />
+uuid=3eb64166-ef58-422b-9845-927069453c4e<br />
+type=wifi<br />
+interface-name=wlp2s0<br />
+timestamp=1691041051<br />
+bridge=br0</p>
+<p>[wifi]<br />
+mode=infrastructure<br />
+ssid=Weidian-video</p>
+<p>[wifi-security]<br />
+key-mgmt=wpa-psk<br />
+psk=密码</p>
+<p>[ipv4]<br />
+address1=172.19.128.18/17,172.19.128.1<br />
+dns=19.18.8.17;172.19.43.151;<br />
+method=manual</p>
+<p>[ipv6]<br />
+addr-gen-mode=stable-privacy<br />
+method=auto</p>
+<p>[proxy]</p>
+<ul>
+<li>企业认证Wi-Fi连接</li>
+</ul>
+<blockquote>
+<p>我也不会，求大佬教。</p>
+</blockquote>
 ]]></content:encoded>
         </item>
         <item>
